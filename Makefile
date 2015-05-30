@@ -1,0 +1,24 @@
+
+.PHONY: all clean test install
+
+OBJDIR=./build
+TARGET=$(OBJDIR)/dist.y-transit.alfredworkflow
+
+all: $(TARGET)
+
+$(TARGET): $(OBJDIR)/icon.png $(OBJDIR)/info.plist
+	zip -j -D $@ $?
+
+$(OBJDIR)/icon.png: icon.svg
+	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	convert -background None icon.svg $@
+
+$(OBJDIR)/info.plist: query.py info.plist make-info.plist.py
+	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	python make-info.plist.py
+
+clean:
+	rm -f *.pyc $(OBJDIR)/*
+
+install: all
+	open $(TARGET)
