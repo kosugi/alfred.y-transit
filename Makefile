@@ -6,7 +6,7 @@ TARGET=$(OBJDIR)/dist.y-transit.alfredworkflow
 
 all: $(TARGET)
 
-$(TARGET): $(OBJDIR)/icon.png $(OBJDIR)/info.plist
+$(TARGET): test $(OBJDIR)/icon.png $(OBJDIR)/info.plist
 	zip -j -D $@ $?
 
 $(OBJDIR)/icon.png: icon.svg
@@ -19,6 +19,9 @@ $(OBJDIR)/info.plist: query.py info.plist make-info.plist.py
 
 clean:
 	rm -f *.pyc $(OBJDIR)/*
+
+test:
+	python -m unittest test_query
 
 install: all
 	open $(TARGET)
