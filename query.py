@@ -18,23 +18,33 @@ def h(value):
 def u(value):
     return quote(value.encode('UTF-8'))
 
+def parse_names(q):
+    m = re.match(ur'''\A\s*(\S+?)\s+(\S+)\s*\Z''', q.replace(u'　', u' '))
+    if m:
+        return m.groups()
+
+def build_url(src, dest):
+    return u'''http://transit.loco.yahoo.co.jp/search/result?from={src}&to={dest}'''.format(src=u(src), dest=u(dest))
+
+def build_xml(validity, url, title):
+    valid = ('no', 'yes')[bool(validity)]
+    return u'''<?xml version="1.0"?>
+<items>
+  <item uid="result" arg="{url}" valid="{valid}">
+    <title>{title}</title>
+  </item>
+</items>'''.format(title=h(title), url=h(url), valid=h(valid))
+
+def do(q):
+    names = parse_names(q)
+    if names:
+        src, dest = names
+        url = build_url(src, dest)
+        return build_xml(True, url, u'Query routes from {src} to {dest}'.format(src=src, dest=dest))
+    else:
+        return build_xml(False, '', u'type “from” and “to” station names')
+
 if __name__ == '__main__':
     sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
     q = sys.argv[1].decode('UTF-8') if 1 < len(sys.argv) else u"""{query}"""
-    m = re.match(ur'''\A\s*(\S+?)\s+(.+?)\s*\Z''', q)
-    if m:
-        src, dst = m.groups()
-        url = '''http://transit.loco.yahoo.co.jp/search/result?from={src}&to={dst}'''.format(src=u(src), dst=u(dst))
-        print u'''<?xml version="1.0"?>
-<items>
-  <item uid="result" arg="{url}" valid="yes">
-    <title>Query routes from {f} to {t}</title>
-  </item>
-</items>'''.format(q=h(q), f=h(src), t=h(dst), url=h(url))
-    else:
-        print u'''<?xml version="1.0"?>
-<items>
-  <item uid="result" valid="no">
-    <title>type “from” and “to” station names</title>
-  </item>
-</items>'''
+    print do(q)
