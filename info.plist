@@ -65,7 +65,7 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>script</key>
-				<string>[A]</string>
+				<string></string>
 				<key>subtext</key>
 				<string>type “from” and “to” station names</string>
 				<key>title</key>
@@ -99,6 +99,6 @@
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://github.com/kosugi/alfred.y-transit</string>
 </dict>
 </plist>
