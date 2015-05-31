@@ -2,7 +2,7 @@
 .PHONY: all clean test install
 
 OBJDIR=./build
-TARGET=$(OBJDIR)/dist.y-transit.alfredworkflow
+TARGET=$(OBJDIR)/dist.alfredworkflow
 
 all: $(TARGET)
 
