@@ -24,6 +24,12 @@ class QueryTestCase(unittest.TestCase):
         self.assertEqual((u'a', u'b'), parse_names(u' a b'))
         self.assertEqual((u'a', u'b'), parse_names(u' a b '))
         self.assertEqual((u'a', u'b'), parse_names(u' a　b '))
+        self.assertEqual((u'a', u'b'), parse_names(u'a-b'))
+        self.assertEqual((u'a', u'b'), parse_names(u'a - b'))
+        self.assertEqual((u'a', u'b'), parse_names(u'a〜b'))
+        self.assertEqual((u'a', u'b'), parse_names(u'a～b'))
+        self.assertEqual((u'a', u'b'), parse_names(u'a－b'))
+        self.assertEqual((u'a', u'b'), parse_names(u'a　－　b'))
         self.assertEqual(None, parse_names(u' a b c'))
 
     def test_do(self):
