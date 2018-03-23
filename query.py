@@ -24,7 +24,7 @@ def parse_names(q):
         return m.groups()
 
 def build_url(src, dest):
-    return u'''http://transit.loco.yahoo.co.jp/search/result?from={src}&to={dest}'''.format(src=u(src), dest=u(dest))
+    return u'''http://transit.yahoo.co.jp/search/result?from={src}&to={dest}'''.format(src=u(src), dest=u(dest))
 
 def build_xml(validity, url, title):
     valid = ('no', 'yes')[bool(validity)]

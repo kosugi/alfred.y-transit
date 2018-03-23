@@ -42,7 +42,7 @@ class QueryTestCase(unittest.TestCase):
         self.assertEqual(u'<?xml version="1.0"?><items><item uid="result" arg="" valid="no"><title>type “from” and “to” station names</title></item></items>', xml)
 
         xml = re.sub(ur'>\s*<', u'><', do(u' a b '))
-        self.assertEqual(u'<?xml version="1.0"?><items><item uid="result" arg="http://transit.loco.yahoo.co.jp/search/result?from=a&amp;to=b" valid="yes"><title>Query routes from a to b</title></item></items>', xml)
+        self.assertEqual(u'<?xml version="1.0"?><items><item uid="result" arg="http://transit.yahoo.co.jp/search/result?from=a&amp;to=b" valid="yes"><title>Query routes from a to b</title></item></items>', xml)
 
 if __name__ == '__main__':
     unittest.main()
